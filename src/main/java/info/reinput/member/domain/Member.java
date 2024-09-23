@@ -1,4 +1,4 @@
-package info.reinput.global.member.domain;
+package info.reinput.member.domain;
 
 import info.reinput.global.domain.TimeAudit;
 import jakarta.persistence.*;

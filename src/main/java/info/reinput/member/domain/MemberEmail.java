@@ -1,4 +1,4 @@
-package info.reinput.global.member.domain;
+package info.reinput.member.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
