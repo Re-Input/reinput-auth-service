@@ -1,9 +1,12 @@
 package info.reinput.member.domain;
 
+import info.reinput.folder.domain.Folder;
 import info.reinput.global.domain.TimeAudit;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -28,7 +31,8 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberRole role;
 
-    //folders
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Folder> folders;
 
     @Embedded
     private TimeAudit timeAudit;
