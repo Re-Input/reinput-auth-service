@@ -1,14 +1,17 @@
 package info.reinput.folder.domain;
 
+import info.reinput.global.domain.Color;
 import info.reinput.global.domain.Share;
 import info.reinput.global.domain.TimeAudit;
+import info.reinput.insight.domain.Insight;
 import info.reinput.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.awt.*;
+import java.util.List;
+
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -39,6 +42,8 @@ public class Folder {
     private Share share;
 
     //insights
+    @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Insight> insights;
 
     @Embedded
     private TimeAudit timeAudit;

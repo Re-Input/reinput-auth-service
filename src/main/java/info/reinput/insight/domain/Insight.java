@@ -1,7 +1,9 @@
 package info.reinput.insight.domain;
 
+import info.reinput.folder.domain.Folder;
 import info.reinput.global.domain.Images;
 import info.reinput.global.domain.TimeAudit;
+import info.reinput.reminder.domain.Reminder;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -34,7 +36,12 @@ public class Insight {
     @OneToMany(mappedBy = "insight", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HashTag> hashTags;
 
-    //reminder
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "folder_id")
+    private Folder folder;
+
+    @OneToOne(mappedBy = "insight", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Reminder reminder;
 
     @Embedded
     private TimeAudit timeAudit;
