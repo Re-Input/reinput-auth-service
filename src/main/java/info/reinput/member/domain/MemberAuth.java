@@ -18,9 +18,6 @@ public class MemberAuth {
     @Column(nullable = false, name = "member_id")
     private String password;
 
-    @Column(nullable = false, name = "member_is_enable")
-    private boolean isEnable;
-
     @Column(name = "member_last_login_at")
     private LocalDateTime lastLoginAt;
 }

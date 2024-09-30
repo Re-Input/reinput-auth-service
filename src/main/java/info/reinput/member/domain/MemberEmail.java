@@ -17,6 +17,9 @@ public class MemberEmail {
     @Column(nullable = false, name = "member_email")
     private String email;
 
+    @Column(name = "member_email_verified")
+    private boolean emailVerified;
+
     @Column(name = "member_recover_email")
     private String recoverEmail;
 }
