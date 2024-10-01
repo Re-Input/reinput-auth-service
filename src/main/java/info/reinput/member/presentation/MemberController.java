@@ -22,10 +22,12 @@ public class MemberController {
     @PostMapping("/v1/signup")
     public ResponseEntity<Void> signUp(final @Valid @RequestBody SignUpReq signUpReq) {
         log.info("signUpReq: {}", signUpReq);
-
-        //todo 회원가입 로직 구현
+        memberService.signUp(signUpReq);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+
+
 
 
 }

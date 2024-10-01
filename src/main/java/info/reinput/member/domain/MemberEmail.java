@@ -22,4 +22,8 @@ public class MemberEmail {
 
     @Column(name = "member_recover_email")
     private String recoverEmail;
+
+    public void verifyEmail() {
+        this.emailVerified = true;
+    }
 }

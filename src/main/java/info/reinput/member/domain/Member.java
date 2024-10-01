@@ -47,10 +47,19 @@ public class Member {
         this.role = role;
     }
 
-    public static Member signUp(SignUpReq signUpReq) {
+    public static boolean validateEmailCode(String authCode, String storedAuthCode) {
+        return storedAuthCode.equals(authCode);
+    }
+
+    public static Member signUp(SignUpReq signUpReq, String storedAuthCode) {
+        boolean emailVerified = validateEmailCode(signUpReq.mailCode(), storedAuthCode);
+        if (!emailVerified) {
+            throw new IllegalArgumentException("인증 코드가 일치하지 않습니다.");
+        }
         return Member.builder()
                 .email(MemberEmail.builder()
                         .email(signUpReq.email())
+                        .emailVerified(true)
                         .build())
                 .auth(MemberAuth.builder()
                         .password(signUpReq.password())
@@ -64,6 +73,4 @@ public class Member {
                 .role(MemberRole.USER)
                 .build();
     }
-
-
 }

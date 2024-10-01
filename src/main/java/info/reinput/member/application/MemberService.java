@@ -20,8 +20,13 @@ public class MemberService {
     public void signUp(final SignUpReq signUpReq) {
         log.info("signUpReq email: {}", signUpReq.email());
 
-        Member member = Member.signUp(signUpReq);
+         //todo redis 인증코드 추가
 
+        String authCode = "XABCD";
+
+        Member member = Member.signUp(signUpReq, authCode);
+        memberRespository.save(member);
+        log.info("signUp member email: {}", member.getEmail());
     }
 
 

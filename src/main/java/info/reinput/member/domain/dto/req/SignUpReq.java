@@ -22,6 +22,8 @@ public record SignUpReq (
         String name,
         @NotNull(message = "직업은 필수입니다.")
         Job job,
+        @NotNull(message = "mail 코드가 필요합니다.")
+        String mailCode,
         List<String> topics
 ){
 }
