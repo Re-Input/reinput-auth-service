@@ -30,6 +30,7 @@ public class Member {
     @Embedded
     private MemberInfo info;
 
+    @Getter
     @Enumerated(EnumType.STRING)
     private MemberRole role;
 
@@ -72,5 +73,17 @@ public class Member {
                         .build())
                 .role(MemberRole.USER)
                 .build();
+    }
+
+    public String getPassword() {
+        return auth.getPassword();
+    }
+
+    public String getEmail() {
+        return email.getEmail();
+    }
+
+    public boolean getVerified() {
+        return email.getEmailVerified();
     }
 }

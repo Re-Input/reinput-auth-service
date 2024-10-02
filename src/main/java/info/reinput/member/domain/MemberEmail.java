@@ -26,4 +26,8 @@ public class MemberEmail {
     public void verifyEmail() {
         this.emailVerified = true;
     }
+
+    public boolean getEmailVerified() {
+        return this.emailVerified;
+    }
 }
