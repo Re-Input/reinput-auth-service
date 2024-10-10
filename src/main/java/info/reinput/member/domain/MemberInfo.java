@@ -29,7 +29,18 @@ public class MemberInfo {
     @Column(name = "member_profile_image")
     private String profileImage;
 
+    @Column(name = "member_enable")
+    private boolean enable;
+
     @Column(name = "member_job")
     @Enumerated(EnumType.STRING)
     private Job job;
+
+    public void disable() {
+        this.enable = false;
+    }
+
+    public void enable() {
+        this.enable = true;
+    }
 }
