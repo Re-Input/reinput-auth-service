@@ -19,7 +19,7 @@ public class PrincipalDetailsService {
         UserDetailsService 구현체
         memberId가 존재 할경우 PrincipalDetails로 반환
      */
-    public UserDetails loadUserByUserId(Long memberId) throws UsernameNotFoundException {
+    public UserDetails loadMemberByMemberId(Long memberId) throws UsernameNotFoundException {
         Member member = memberRespository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 사용자를 찾을 수 없습니다. : " + memberId));
 

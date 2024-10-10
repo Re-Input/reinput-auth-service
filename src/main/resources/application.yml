@@ -1,0 +1,27 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:h2::mem:reinput;MODE=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+        hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+jwt:
+  secret: 91950840275a2552d5832f66be42eecd13cfbfdd9f7e1f731d1fa63b3743f28e02d27011f973b2a21678cc6ab51e6274c5c8679e0b493c0de1c6e172e3db62c0
+  accessToken:
+    expiration: 3600
+  refreshToken:
+    expiration: 86400
