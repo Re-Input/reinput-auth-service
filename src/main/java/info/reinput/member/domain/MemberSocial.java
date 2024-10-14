@@ -7,18 +7,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
-@Embeddable
 @Getter
+@Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Deprecated
-public class MemberAuth {
-    @Column(nullable = false, name = "member_id")
-    private String password;
+public class MemberSocial {
 
-    @Column(name = "member_last_login_at")
-    private LocalDateTime lastLoginAt;
+    @Column(nullable = false, name = "member_social_id")
+    private String socialId;
+
+    @Column(nullable = false, name = "member_social")
+    private SocialType socialType;
+
+
 }

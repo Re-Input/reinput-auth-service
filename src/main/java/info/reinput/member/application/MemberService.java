@@ -17,16 +17,8 @@ public class MemberService {
     private final MemberRespository memberRespository;
 
     @Transactional
-    public void signUp(final SignUpReq signUpReq) {
+    public void emailSignUp(final SignUpReq signUpReq) {
         log.info("signUpReq email: {}", signUpReq.email());
-
-         //todo redis 인증코드 추가
-
-        String authCode = "XABCD";
-
-        Member member = Member.signUp(signUpReq, authCode);
-        memberRespository.save(member);
-        log.info("signUp member email: {}", member.getEmail());
     }
 
 

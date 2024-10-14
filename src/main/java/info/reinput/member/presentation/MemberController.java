@@ -22,7 +22,7 @@ public class MemberController {
     @PostMapping("/v1/signup")
     public ResponseEntity<Void> signUp(final @Valid @RequestBody SignUpReq signUpReq) {
         log.info("signUpReq: {}", signUpReq);
-        memberService.signUp(signUpReq);
+        memberService.emailSignUp(signUpReq);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

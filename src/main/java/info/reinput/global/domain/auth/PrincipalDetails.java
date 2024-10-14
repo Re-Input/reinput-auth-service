@@ -2,7 +2,6 @@ package info.reinput.global.domain.auth;
 
 import info.reinput.global.util.AuthorityUtils;
 import info.reinput.member.domain.Member;
-import info.reinput.member.domain.MemberEmail;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

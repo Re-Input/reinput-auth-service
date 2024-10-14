@@ -23,9 +23,6 @@ public class MemberInfo {
     @Column(name = "member_nickname")
     private String nickname;
 
-    @Column(nullable = false, name = "member_birth")
-    private LocalDate birth;
-
     @Column(name = "member_profile_image")
     private String profileImage;
 
@@ -35,6 +32,9 @@ public class MemberInfo {
     @Column(name = "member_job")
     @Enumerated(EnumType.STRING)
     private Job job;
+
+    @Column(name = "member_isOnboarded")
+    private boolean isOnboarded;
 
     public void disable() {
         this.enable = false;
