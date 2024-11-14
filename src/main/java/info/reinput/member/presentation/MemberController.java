@@ -19,15 +19,5 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
     private final MemberService memberService;
 
-    @PostMapping("/v1/signup")
-    public ResponseEntity<Void> signUp(final @Valid @RequestBody SignUpReq signUpReq) {
-        log.info("signUpReq: {}", signUpReq);
-        memberService.emailSignUp(signUpReq);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-
-
-
 
 }

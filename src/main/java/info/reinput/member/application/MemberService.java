@@ -1,6 +1,9 @@
 package info.reinput.member.application;
 
 import info.reinput.member.domain.Member;
+import info.reinput.member.domain.MemberRole;
+import info.reinput.member.domain.MemberSocial;
+import info.reinput.member.domain.SocialType;
 import info.reinput.member.domain.dto.req.SignUpReq;
 import info.reinput.member.infra.MemberRespository;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +20,15 @@ public class MemberService {
     private final MemberRespository memberRespository;
 
     @Transactional
-    public void emailSignUp(final SignUpReq signUpReq) {
+    public void generalSignUp(final SignUpReq signUpReq) {
         log.info("signUpReq email: {}", signUpReq.email());
+        MemberSocial memberSocial = MemberSocial.builder()
+                .socialId(signUpReq.email())
+                .socialType(SocialType.ETC)
+                .build();
+        Member member = Member.create(memberSocial, null, MemberRole.ADMIN);
+
+        memberRespository.save(member);
     }
 
 
