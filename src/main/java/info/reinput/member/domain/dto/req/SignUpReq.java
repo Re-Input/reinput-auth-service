@@ -9,9 +9,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record SignUpReq (
-        @NotEmpty(message = "이메일은 필수입니다.")
-        @Email(message = "올바른 이메일 형식이 아닙니다.")
-        String email,
+        @NotEmpty(message = "id는 필수 입력입니다.")
+        String id,
         @NotNull(message = "복구 이메일은 필수입니다.")
         String recoveryEmail,
         @NotNull(message = "생년월일은 필수입니다.")
@@ -20,8 +19,6 @@ public record SignUpReq (
         String password,
         @NotEmpty(message = "이름은 필수입니다.")
         String name,
-        @NotNull(message = "직업은 필수입니다.")
-        Job job,
         @NotNull(message = "mail 코드가 필요합니다.")
         String mailCode,
         List<String> topics

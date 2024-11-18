@@ -1,15 +1,13 @@
 package info.reinput.member.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Embeddable
 @NoArgsConstructor
@@ -32,6 +30,10 @@ public class MemberInfo {
     @Column(name = "member_job")
     @Enumerated(EnumType.STRING)
     private Job job;
+
+    @ElementCollection
+    @CollectionTable(name = "member_topics", joinColumns = @JoinColumn(name = "member_id"))
+    List<String> topics = new ArrayList<>();
 
     @Column(name = "member_isOnboarded")
     private boolean isOnboarded;

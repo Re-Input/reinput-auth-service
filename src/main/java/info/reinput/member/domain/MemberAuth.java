@@ -14,11 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Deprecated
 public class MemberAuth {
     @Column(nullable = false, name = "member_id")
     private String password;
-
-    @Column(name = "member_last_login_at")
-    private LocalDateTime lastLoginAt;
 }

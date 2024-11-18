@@ -27,9 +27,6 @@ public class Member {
     @Embedded
     private MemberInfo info;
 
-    @Getter
-    @Enumerated(EnumType.STRING)
-    private MemberRole role;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Folder> folders;
@@ -38,17 +35,15 @@ public class Member {
     private TimeAudit timeAudit;
 
     @Builder
-    public Member(MemberSocial social, MemberInfo info, MemberRole role) {
+    public Member(MemberSocial social, MemberInfo info) {
         this.social = social;
         this.info = info;
-        this.role = role;
     }
 
-    public static Member create(MemberSocial social, MemberInfo info, MemberRole role) {
+    public static Member create(MemberSocial social, MemberInfo info) {
         return Member.builder()
                 .social(social)
                 .info(info)
-                .role(role)
                 .build();
     }
 }

@@ -21,4 +21,7 @@ public class MemberSocial {
     private SocialType socialType;
 
 
+    public static MemberSocial createGeneral(String id){
+        return new MemberSocial(id, SocialType.ETC);
+    }
 }

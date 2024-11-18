@@ -21,14 +21,8 @@ public class MemberService {
 
     @Transactional
     public void generalSignUp(final SignUpReq signUpReq) {
-        log.info("signUpReq email: {}", signUpReq.email());
-        MemberSocial memberSocial = MemberSocial.builder()
-                .socialId(signUpReq.email())
-                .socialType(SocialType.ETC)
-                .build();
-        Member member = Member.create(memberSocial, null, MemberRole.ADMIN);
+        log.info("generalSignUp start");
 
-        memberRespository.save(member);
     }
 
 
