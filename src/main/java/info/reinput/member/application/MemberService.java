@@ -1,9 +1,5 @@
 package info.reinput.member.application;
 
-import info.reinput.member.domain.Member;
-import info.reinput.member.domain.MemberRole;
-import info.reinput.member.domain.MemberSocial;
-import info.reinput.member.domain.SocialType;
 import info.reinput.member.domain.dto.req.SignUpReq;
 import info.reinput.member.infra.MemberRespository;
 import lombok.RequiredArgsConstructor;

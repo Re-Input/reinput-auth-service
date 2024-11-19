@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MemberSocial {
+public class SocialInfo {
 
     @Column(nullable = false, name = "member_social_id")
     private String socialId;
@@ -21,7 +21,7 @@ public class MemberSocial {
     private SocialType socialType;
 
 
-    public static MemberSocial createGeneral(String id){
-        return new MemberSocial(id, SocialType.ETC);
+    public static SocialInfo createGeneral(String id){
+        return new SocialInfo(id, SocialType.ETC);
     }
 }

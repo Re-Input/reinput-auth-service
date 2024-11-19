@@ -11,39 +11,35 @@ import java.util.List;
 
 import static lombok.AccessLevel.PROTECTED;
 
+
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "member_type")
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @Table(name = "member")
 @Entity
-public class Member {
+public abstract class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
     @Embedded
-    private MemberSocial social;
-
-    @Embedded
     private MemberInfo info;
-
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Folder> folders;
 
+    @Column(name = "member_role")
+    @Enumerated(EnumType.STRING)
+    private MemberRole role;
+
     @Embedded
     private TimeAudit timeAudit;
 
-    @Builder
-    public Member(MemberSocial social, MemberInfo info) {
-        this.social = social;
+    protected Member(MemberInfo info, MemberRole role) {
         this.info = info;
+        this.role = role;
     }
 
-    public static Member create(MemberSocial social, MemberInfo info) {
-        return Member.builder()
-                .social(social)
-                .info(info)
-                .build();
-    }
 }
