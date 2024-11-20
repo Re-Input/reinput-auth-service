@@ -42,4 +42,6 @@ public abstract class Member {
         this.role = role;
     }
 
+
+
 }
