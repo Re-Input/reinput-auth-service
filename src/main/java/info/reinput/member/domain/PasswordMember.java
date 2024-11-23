@@ -23,4 +23,12 @@ public class PasswordMember extends Member {
         this.password = password;
     }
 
+    public static PasswordMember create(MemberInfo memberInfo, String password, MemberRole role) {
+        return PasswordMember.builder()
+                .memberInfo(memberInfo)
+                .password(password)
+                .role(role)
+                .build();
+    }
+
 }
