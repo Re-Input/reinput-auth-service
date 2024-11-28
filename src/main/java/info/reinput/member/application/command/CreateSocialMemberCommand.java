@@ -1,6 +1,10 @@
 package info.reinput.member.application.command;
 
+import info.reinput.member.domain.MemberInfo;
+import info.reinput.member.domain.MemberRole;
+import info.reinput.member.domain.SocialInfo;
 import info.reinput.member.domain.SocialType;
+import info.reinput.member.domain.dto.req.SocialSignUpReq;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,21 +15,40 @@ import java.time.LocalDate;
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class CreateSocialMemberCommand {
+public final class CreateSocialMemberCommand implements MemberCommand {
+    private final String id;
     private final String name;
-    private final String socialId;
-    private final String profileImage;
-    private final SocialType socialType;
     private final LocalDate birth;
+    private final SocialType socialType;
+    @Builder.Default
+    private final MemberRole role = MemberRole.USER;
+    @Builder.Default
+    private final boolean enable =true;
+    @Builder.Default
+    private final boolean isOnboarded = false;
 
-
-    public static CreateSocialMemberCommand of(String name, String socialId, String profileImage, SocialType socialType, LocalDate birth) {
+    public static CreateSocialMemberCommand from(SocialSignUpReq signUpReq){
         return CreateSocialMemberCommand.builder()
+                .id(signUpReq.socialId())
+                .name(signUpReq.name())
+                .birth(signUpReq.birth())
+                .socialType(signUpReq.socialType())
+                .build();
+    }
+
+    @Override
+    public MemberInfo toMemberInfo() {
+        return MemberInfo.builder()
                 .name(name)
-                .socialId(socialId)
-                .profileImage(profileImage)
+                .enable(enable)
+                .isOnboarded(isOnboarded)
+                .build();
+    }
+
+    public SocialInfo toSocialInfo(){
+        return SocialInfo.builder()
+                .socialId(id)
                 .socialType(socialType)
-                .birth(birth)
                 .build();
     }
 }

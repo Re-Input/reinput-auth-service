@@ -1,33 +1,53 @@
 package info.reinput.member.application.command;
 
-import info.reinput.member.domain.Job;
+import info.reinput.member.domain.MemberInfo;
 import info.reinput.member.domain.MemberRole;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
 @Getter
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class CreatePasswordMemberCommand {
+public final class CreatePasswordMemberCommand implements MemberCommand{
+    private final String id;
     private final String name;
-    private final String nickname;
-    private final Job job;
     private final String password;
-    @Builder.Default
-    private final List<String> topics = new ArrayList<>();
+    private final LocalDate birth;
     @Builder.Default
     private final MemberRole role = MemberRole.USER;
+    @Builder.Default
+    private final boolean enable =true;
+    @Builder.Default
+    private final boolean isOnboarded = false;
 
-    public static CreatePasswordMemberCommandBuilder of(String name, String nickname, Job job, String password) {
+    public static CreatePasswordMemberCommand from(String id, String name, String password, LocalDate birth){
         return CreatePasswordMemberCommand.builder()
+                .id(id)
                 .name(name)
-                .nickname(nickname)
-                .job(job)
-                .password(password);
+                .password(password)
+                .birth(birth)
+                .build();
     }
+
+    public static CreatePasswordMemberCommand fromAdmin(String id, String name, String password, LocalDate birth){
+        return CreatePasswordMemberCommand.builder()
+                .id(id)
+                .name(name)
+                .password(password)
+                .birth(birth)
+                .role(MemberRole.ADMIN)
+                .build();
+    }
+
+    @Override
+    public MemberInfo toMemberInfo() {
+        return MemberInfo.builder()
+                .name(name)
+                .enable(enable)
+                .isOnboarded(isOnboarded)
+                .build();
+    }
+
+
 }
