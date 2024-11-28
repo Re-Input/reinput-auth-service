@@ -1,7 +1,7 @@
 package info.reinput.member.application.command;
 
 import info.reinput.member.domain.*;
-import info.reinput.member.domain.dto.req.SocialSignUpReq;
+import info.reinput.member.presentation.dto.req.SocialSignUpReq;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

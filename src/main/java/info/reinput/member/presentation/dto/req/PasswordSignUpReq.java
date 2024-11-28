@@ -1,4 +1,4 @@
-package info.reinput.member.domain.dto.req;
+package info.reinput.member.presentation.dto.req;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

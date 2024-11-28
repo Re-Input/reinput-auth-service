@@ -1,4 +1,4 @@
-package info.reinput.member.domain.dto.req;
+package info.reinput.member.presentation.dto.req;
 
 import info.reinput.member.domain.SocialType;
 
