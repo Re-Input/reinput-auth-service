@@ -1,14 +1,12 @@
 package info.reinput.member.application.command;
 
-import info.reinput.member.domain.MemberInfo;
-import info.reinput.member.domain.MemberRole;
-import info.reinput.member.domain.SocialInfo;
-import info.reinput.member.domain.SocialType;
+import info.reinput.member.domain.*;
 import info.reinput.member.domain.dto.req.SocialSignUpReq;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 
@@ -33,6 +31,15 @@ public final class CreateSocialMemberCommand implements MemberCommand {
                 .name(signUpReq.name())
                 .birth(signUpReq.birth())
                 .socialType(signUpReq.socialType())
+                .build();
+    }
+
+    @Override
+    public Member toMember(PasswordEncoder passwordEncoder) {
+        return SocialMember.builder()
+                .memberInfo(toMemberInfo())
+                .socialInfo(toSocialInfo())
+                .role(role)
                 .build();
     }
 
