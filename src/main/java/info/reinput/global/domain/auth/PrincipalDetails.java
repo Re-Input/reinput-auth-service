@@ -40,7 +40,7 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return member.getEmail();
+        return member.getName();
     }
 
     @Override
@@ -60,6 +60,6 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return member.getVerified();
+        return member.isEnable();
     }
 }

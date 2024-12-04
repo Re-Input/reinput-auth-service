@@ -30,4 +30,9 @@ public class SocialMember extends Member{
                 .role(role)
                 .build();
     }
+
+    @Override
+    public String getPassword() {
+        return "";
+    }
 }

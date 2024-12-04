@@ -42,6 +42,13 @@ public abstract class Member {
         this.role = role;
     }
 
+    public String getName() {
+        return info.getName();
+    }
 
+    public boolean isEnable() {
+        return info.isEnable();
+    }
+    public abstract String getPassword();
 
 }
