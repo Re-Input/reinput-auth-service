@@ -26,7 +26,7 @@ spring:
           kakao:
             client-id: ${KAKAO_CLIENT_ID}
             client-secret: ${KAKAO_CLIENT_SECRET}
-            redirect-uri: http://localhost:8080/auth/oauth2/kakao/callback/v1
+            redirect-uri: "{baseUrl}/auth/oauth2/kakao/callback/v1"
             authorization-grant-type: authorization_code
             client-authentication-method: client_secret_post
             scope:
@@ -46,3 +46,4 @@ jwt:
 logging:
   level:
     org.springframework.web: DEBUG
+    security: DEBUG

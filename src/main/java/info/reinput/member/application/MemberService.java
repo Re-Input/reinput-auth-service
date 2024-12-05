@@ -19,10 +19,12 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void signUp(MemberCommand memberCommand){
+    public Member signUp(MemberCommand memberCommand){
         log.info("singUp start");
         Member member = memberCommand.toMember(passwordEncoder);
         memberRespository.save(member);
+
+        return member;
     }
 
 

@@ -1,14 +1,14 @@
 package info.reinput.member.application.impl;
 
-import info.reinput.member.application.OAuth2Service;
+import info.reinput.member.application.CustomOAuth2Service;
 import info.reinput.member.application.command.CreateSocialMemberCommand;
-import info.reinput.member.application.command.MemberCommand;
 import info.reinput.member.domain.Member;
 import info.reinput.member.domain.SocialType;
 import info.reinput.member.infra.MemberRespository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -19,14 +19,14 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class OAuth2ServiceImpl extends DefaultOAuth2UserService {
+public class CustomOAuth2ServiceImpl extends DefaultOAuth2UserService implements CustomOAuth2Service {
     private final MemberRespository memberRespository;
-    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -62,7 +62,10 @@ public class OAuth2ServiceImpl extends DefaultOAuth2UserService {
         //todo : custom exception
         return switch (socialType) {
             case GOOGLE -> oAuth2User.getAttribute("email");
-            case KAKAO -> oAuth2User.getAttribute("kakao_account.email");
+            case KAKAO -> {
+                var kakaoAccount = (Map<String, Object>) oAuth2User.getAttribute("kakao_account");
+                yield kakaoAccount != null ? (String) kakaoAccount.get("email") : null;
+            }
             default -> throw new IllegalArgumentException("지원하지 않는 소셜입니다.");
         };
     }
@@ -77,7 +80,7 @@ public class OAuth2ServiceImpl extends DefaultOAuth2UserService {
                 .id(socialId)
                 .socialType(socialType)
                 .build();
-
-        return memberRespository.save(command.toMember(passwordEncoder));
+        //refactor
+        return memberRespository.save(command.toMember(null));
     }
 }

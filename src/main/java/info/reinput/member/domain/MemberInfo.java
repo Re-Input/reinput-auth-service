@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Builder
 public class MemberInfo {
-    @Column(nullable = false, name = "member_name")
+    @Column(name = "member_name")
     private String name;
 
     @Column(name = "member_nickname")

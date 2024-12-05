@@ -29,7 +29,7 @@ public class TokenProvider {
         byte[] signingKey = jwtSecret.getBytes(StandardCharsets.UTF_8);
 
         return Jwts.builder()
-                .signWith(Keys.hmacShaKeyFor(signingKey), SignatureAlgorithm.HS512)
+                .signWith(Keys.hmacShaKeyFor(signingKey), SignatureAlgorithm.HS256)
                 .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(accessTokenExpiration).toInstant()))
                 .setSubject(memberId.toString())
                 .claim("type", TokenType.ACCESS)
@@ -52,7 +52,7 @@ public class TokenProvider {
         byte[] signingKey = jwtSecret.getBytes(StandardCharsets.UTF_8);
 
         return Jwts.builder()
-                .signWith(Keys.hmacShaKeyFor(signingKey), SignatureAlgorithm.HS512)
+                .signWith(Keys.hmacShaKeyFor(signingKey), SignatureAlgorithm.HS256)
                 .setExpiration(Date.from(ZonedDateTime.now().plusDays(refreshTokenExpiration).toInstant()))
                 .setSubject(memberId.toString())
                 .claim("type", TokenType.REFRESH)
