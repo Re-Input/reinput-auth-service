@@ -40,3 +40,5 @@ out/
 
 prod.env
 dev.env
+.env.dev
+.env.prod

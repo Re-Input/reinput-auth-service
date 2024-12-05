@@ -1,15 +1,13 @@
 package info.reinput.member.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Embeddable
 @NoArgsConstructor
@@ -17,14 +15,11 @@ import java.time.LocalDate;
 @Getter
 @Builder
 public class MemberInfo {
-    @Column(nullable = false, name = "member_name")
+    @Column(name = "member_name")
     private String name;
 
     @Column(name = "member_nickname")
     private String nickname;
-
-    @Column(nullable = false, name = "member_birth")
-    private LocalDate birth;
 
     @Column(name = "member_profile_image")
     private String profileImage;
@@ -35,6 +30,13 @@ public class MemberInfo {
     @Column(name = "member_job")
     @Enumerated(EnumType.STRING)
     private Job job;
+
+    @ElementCollection
+    @CollectionTable(name = "member_topics", joinColumns = @JoinColumn(name = "member_id"))
+    List<String> topics = new ArrayList<>();
+
+    @Column(name = "member_isOnboarded")
+    private boolean isOnboarded;
 
     public void disable() {
         this.enable = false;
