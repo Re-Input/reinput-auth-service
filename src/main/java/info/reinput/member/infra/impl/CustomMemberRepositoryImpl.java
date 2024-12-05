@@ -24,4 +24,14 @@ public class CustomMemberRepositoryImpl implements CustomMemberRepository {
                 .where(socialMember.socialInfo.socialId.eq(socialId))
                 .fetchOne());
     }
+
+    public boolean existBySocialId(String socialId) {
+        Integer fetchOne = queryFactory
+                .selectOne()
+                .from(socialMember)
+                .where(socialMember.socialInfo.socialId.eq(socialId))
+                .fetchFirst();
+                
+        return fetchOne != null;
+    }
 }

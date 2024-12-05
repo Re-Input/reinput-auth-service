@@ -8,4 +8,5 @@ import java.util.Optional;
 @Repository
 public interface CustomMemberRepository {
     Optional<Member> findBySocialInfoSocialId(String socialId);
+    boolean existBySocialId(String socialId);
 }

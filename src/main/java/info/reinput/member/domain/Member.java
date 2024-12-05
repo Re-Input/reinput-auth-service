@@ -3,7 +3,6 @@ package info.reinput.member.domain;
 import info.reinput.folder.domain.Folder;
 import info.reinput.global.domain.TimeAudit;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
