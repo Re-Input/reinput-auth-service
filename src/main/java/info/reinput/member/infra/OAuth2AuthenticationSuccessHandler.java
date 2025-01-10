@@ -2,7 +2,7 @@ package info.reinput.member.infra;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import info.reinput.global.util.TokenProvider;
-import info.reinput.member.application.MemberService;
+import info.reinput.member.application.impl.MemberServiceImpl;
 import info.reinput.member.application.CustomOAuth2Service;
 import info.reinput.member.application.command.CreateSocialMemberCommand;
 import info.reinput.member.domain.Member;
@@ -24,14 +24,14 @@ import java.util.Optional;
 @Component
 public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private final CustomOAuth2Service customOAuth2Service;
-    private final MemberService memberService;
+    private final MemberServiceImpl memberService;
     private final TokenProvider tokenProvider;
     private final MemberRespository memberRepository;
     private final ObjectMapper objectMapper;
 
     public OAuth2AuthenticationSuccessHandler(
             CustomOAuth2Service customOAuth2Service,
-            @Lazy MemberService memberService,
+            @Lazy MemberServiceImpl memberService,
             TokenProvider tokenProvider,
             MemberRespository memberRepository,
             ObjectMapper objectMapper) {

@@ -2,6 +2,7 @@ package info.reinput.member.domain;
 
 import info.reinput.folder.domain.Folder;
 import info.reinput.global.domain.TimeAudit;
+import info.reinput.member.application.dto.MemberDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,6 +49,11 @@ public abstract class Member {
     public boolean isEnable() {
         return info.isEnable();
     }
+
     public abstract String getPassword();
+
+    public void onBoard(final MemberInfo memberInfo) {
+        this.info.onBoard(memberInfo);
+    }
 
 }
