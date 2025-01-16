@@ -1,6 +1,5 @@
 package info.reinput.member.domain;
 
-import info.reinput.folder.domain.Folder;
 import info.reinput.global.domain.TimeAudit;
 import info.reinput.member.application.dto.MemberDto;
 import jakarta.persistence.*;
@@ -27,8 +26,6 @@ public abstract class Member {
     @Embedded
     private MemberInfo info;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Folder> folders;
 
     @Column(name = "member_role")
     @Enumerated(EnumType.STRING)
