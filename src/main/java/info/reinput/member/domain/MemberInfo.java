@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,9 @@ import java.util.List;
 public class MemberInfo {
     @Column(name = "member_name")
     private String name;
+
+    @Column(name = "member_birth")
+    private LocalDate birth;
 
     @Column(name = "member_nickname")
     private String nickname;
@@ -44,5 +48,14 @@ public class MemberInfo {
 
     public void enable() {
         this.enable = true;
+    }
+
+    public void onBoard(MemberInfo memberInfo) {
+        this.enable = true;
+        this.isOnboarded = true;
+        this.name = memberInfo.name;
+        this.birth = memberInfo.birth;
+        this.job = memberInfo.job;
+        this.topics = memberInfo.topics;
     }
 }
