@@ -37,7 +37,7 @@ public class MemberServiceImpl implements MemberService {
 
         member.onBoard(memberDto.toMemberInfo());
 
-        //todo: send workspace server to make folder
+        //todo: send workspace service to make folder
     }
 
 

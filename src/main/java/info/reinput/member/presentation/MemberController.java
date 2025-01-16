@@ -22,6 +22,6 @@ public class MemberController {
         log.info("onBoardingV1 start");
         memberService.onBoard(OnBoardReq.toMemberDto(onBoardReq), userId);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
