@@ -2,12 +2,14 @@ package info.reinput;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
-public class ReinputApplication {
+@EnableDiscoveryClient
+public class ReinputAuthServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ReinputApplication.class, args);
+		SpringApplication.run(ReinputAuthServiceApplication.class, args);
 	}
 
 }
