@@ -1,0 +1,5 @@
+jwt.secret=your-jwt-secret-key-here
+jwt.accessToken.expiration=3600
+jwt.refreshToken.expiration=86400
+kakao.client.id=your-kakao-client-id
+kakao.client.secret=your-kakao-client-secret 

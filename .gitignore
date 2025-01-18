@@ -42,3 +42,6 @@ prod.env
 dev.env
 .env.dev
 .env.prod
+
+### application properties ###
+src/main/resources/application-dev.properties
