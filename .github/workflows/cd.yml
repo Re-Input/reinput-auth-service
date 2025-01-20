@@ -9,17 +9,54 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  AWS_REGION: us-east-1
+  ECR_REGISTRY: public.ecr.aws/e7w4k6e4
+
 jobs:
-  cd:
-    uses: Re-Input/reinput-shared-workflows/.github/workflows/reusable-cd.yml@main
-    with:
-      image-name: reinput/auth-service
-      container-name: auth-service
-      container-port: "8081"
-      network-type: "private"
-    secrets:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
-      EC2_HOST: ${{ secrets.EC2_HOST }}
-      EC2_USERNAME: ${{ secrets.EC2_USERNAME }} 
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/reinput-key.pem
+          chmod 600 ~/.ssh/reinput-key.pem
+          cat >>~/.ssh/config <<END
+          Host ec2
+            HostName ${{ secrets.EC2_HOST }}
+            User ${{ secrets.EC2_USERNAME }}
+            IdentityFile ~/.ssh/reinput-key.pem
+            StrictHostKeyChecking no
+          END
+
+      - name: Deploy to EC2
+        run: |
+          ssh ec2 '
+            aws ecr-public get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
+
+            NETWORK_NAME="reinput-network-private"
+            
+            if ! docker network ls | grep -q $NETWORK_NAME; then
+              docker network create $NETWORK_NAME
+            fi
+
+            if docker ps -a | grep -q auth-service; then
+              docker stop auth-service
+              docker rm auth-service
+              docker rmi ${{ env.ECR_REGISTRY }}/reinput/auth-service:latest || true
+            fi
+
+            docker pull ${{ env.ECR_REGISTRY }}/reinput/auth-service:latest
+            docker run -d \
+              --name auth-service \
+              --network $NETWORK_NAME \
+              -p 8081:8081 \
+              -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
+              -e KAKAO_CLIENT_ID="${{ secrets.KAKAO_CLIENT_ID }}" \
+              -e KAKAO_CLIENT_SECRET="${{ secrets.KAKAO_CLIENT_SECRET }}" \
+              ${{ env.ECR_REGISTRY }}/reinput/auth-service:latest
+            
+            docker ps | grep auth-service
+          '
