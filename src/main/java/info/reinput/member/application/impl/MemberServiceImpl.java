@@ -2,7 +2,9 @@ package info.reinput.member.application.impl;
 
 import info.reinput.member.application.MemberService;
 import info.reinput.member.application.command.MemberCommand;
+import info.reinput.member.application.dto.FolderCreateReq;
 import info.reinput.member.application.dto.MemberDto;
+import info.reinput.member.application.port.out.WorkspacePort;
 import info.reinput.member.domain.Member;
 import info.reinput.member.infra.MemberRespository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -19,6 +23,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRespository memberRespository;
     private final PasswordEncoder passwordEncoder;
+    private final WorkspacePort workspacePort;
 
     @Transactional
     public Member signUp(MemberCommand memberCommand){
@@ -37,7 +42,11 @@ public class MemberServiceImpl implements MemberService {
 
         member.onBoard(memberDto.toMemberInfo());
 
-        //todo: send workspace service to make folder
+
+        workspacePort.createFoldersInTopics(memberDto.getTopics().stream()
+                .map(FolderCreateReq::fromDto)
+                .collect(Collectors.toList()), id);
+
     }
 
 
