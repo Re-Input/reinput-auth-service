@@ -4,6 +4,7 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.*;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -39,14 +40,15 @@ public class SwaggerConfig {
                 .title("Reinput Member")
                 .version("v0.0.1")
                 .description("""
-                    Reinput Member Service (auth service)
-                    
-                    인증 플로우:
-                    1. 카카오 OAuth 로그인 수행
-                    2. 성공 시 JWT 토큰 발급
-                    3. 발급받은 JWT를 Authorization 헤더에 Bearer 형식으로 포함하여 API 호출
-                    """);
+                   Reinput Member Service (auth service)
+                   
+                   인증 플로우:
+                   1. 카카오 OAuth 로그인 수행
+                   2. 성공 시 JWT 토큰 발급
+                   3. 발급받은 JWT를 Authorization 헤더에 Bearer 형식으로 포함하여 API 호출
+                   """);
         return new OpenAPI()
+                .servers(List.of(new Server().url("/member"))) // member base path 추가
                 .components(new Components()
                         .addSecuritySchemes("kakao_oauth2", kakaoOauth)
                         .addSecuritySchemes("jwt_auth", jwtAuth))
