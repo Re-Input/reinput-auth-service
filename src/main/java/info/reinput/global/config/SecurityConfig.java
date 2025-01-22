@@ -30,16 +30,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/**", "/oauth2/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .successHandler(oAuth2AuthenticationSuccessHandler)
                         .authorizationEndpoint(authorization -> authorization
-                                .baseUri("/auth/oauth2/authorize"))  // 인증 시작점 설정
+                                .baseUri("/auth/oauth2/authorize"))
                         .redirectionEndpoint(redirection -> redirection
-                                .baseUri("/auth/oauth2/*/callback/*"))  // 콜백 URL 패턴 설정
+                                .baseUri("/auth/oauth2/*/callback/*"))
                 );
 
         return http.build();
