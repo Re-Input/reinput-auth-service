@@ -69,7 +69,10 @@ jwt:
     expiration: 3600
   refreshToken:
     expiration: 86400
-logging:
-  level:
-    org.springframework.web: DEBUG
-    security: DEBUG
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    url: /member/v3/api-docs
+  api-docs:
+    path: /v3/api-docs
