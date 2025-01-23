@@ -83,3 +83,7 @@ springdoc:
       app-name: reinput-auth-service
   api-docs:
     path: /v3/api-docs
+
+logging:
+  level:
+    org.springframework.security: DEBUG
