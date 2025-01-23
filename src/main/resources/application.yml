@@ -81,6 +81,6 @@ springdoc:
       client-secret: ${KAKAO_CLIENT_SECRET}
       scopes: account_email
       app-name: reinput-auth-service
-    oauth2-redirect-url: "http://api.reinput.info:8000/swagger-ui/oauth2-redirect.html"
+    oauth2-redirect-url: "http://api.reinput.info:8000/member/swagger-ui/oauth2-redirect.html"
   api-docs:
     path: /v3/api-docs
