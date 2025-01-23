@@ -41,9 +41,8 @@ public class SwaggerConfig {
         return new SecurityScheme()
                 .type(SecurityScheme.Type.OAUTH2)
                 .flows(new OAuthFlows()
-                        .authorizationCode(new OAuthFlow()
-                                .authorizationUrl("https://kauth.kakao.com/oauth/authorize")
-                                .tokenUrl("https://kauth.kakao.com/oauth/token")
+                        .implicit(new OAuthFlow()
+                                .authorizationUrl("/auth/oauth2/authorize/kakao")
                                 .scopes(new Scopes()
                                         .addString("account_email", "email")
                                 )
@@ -82,7 +81,7 @@ public class SwaggerConfig {
 
     private Paths createAuthPaths() {
         return new Paths()
-                .addPathItem("/oauth2/authorization/kakao", createKakaoLoginPath())
+                .addPathItem("/auth/oauth2/authorize/kakao", createKakaoLoginPath())  // 경로 수정
                 .addPathItem("/auth/oauth2/kakao/callback/v1", createKakaoCallbackPath());
     }
 
