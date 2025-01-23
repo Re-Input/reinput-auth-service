@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
+import java.util.Map;
 
 @Configuration
 public class SwaggerConfig {
@@ -54,9 +55,11 @@ public class SwaggerConfig {
                                 .scopes(new Scopes()
                                         .addString("account_email", "email")
                                 )
+                                .extensions(Map.of(
+                                        "x-client-id", kakaoClientId,
+                                        "x-client-secret", kakaoClientSecret
+                                ))
                         )
-                        .addExtension("x-client-id", kakaoClientId)
-                        .addExtension("x-client-secret", kakaoClientSecret)
                 );
     }
 
