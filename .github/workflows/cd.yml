@@ -36,12 +36,6 @@ jobs:
           ssh ec2 '
             aws ecr-public get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
 
-            NETWORK_NAME="reinput-network-private"
-            
-            if ! docker network ls | grep -q $NETWORK_NAME; then
-              docker network create $NETWORK_NAME
-            fi
-
             if docker ps -a | grep -q auth-service; then
               docker stop auth-service
               docker rm auth-service
@@ -51,8 +45,7 @@ jobs:
             docker pull ${{ env.ECR_REGISTRY }}/reinput/auth-service:latest
             docker run -d \
               --name auth-service \
-              --network $NETWORK_NAME \
-              -p 8081:8081 \
+              --network host \
               -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
               -e KAKAO_CLIENT_ID="${{ secrets.KAKAO_CLIENT_ID }}" \
               -e KAKAO_CLIENT_SECRET="${{ secrets.KAKAO_CLIENT_SECRET }}" \
