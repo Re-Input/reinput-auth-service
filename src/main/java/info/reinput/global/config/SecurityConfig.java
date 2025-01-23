@@ -1,6 +1,7 @@
 package info.reinput.global.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import info.reinput.global.util.HttpCookieOAuth2AuthorizationRequestRepository;
 import info.reinput.member.infra.OAuth2AuthenticationSuccessHandler;
 import info.reinput.member.presentation.dto.res.TokenResponse;
 import org.springframework.context.annotation.Bean;
@@ -36,6 +37,9 @@ public class SecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2
+                        .authorizationEndpoint(authorization -> authorization
+                                .authorizationRequestRepository(new HttpCookieOAuth2AuthorizationRequestRepository())
+                        )
                         .successHandler(oAuth2AuthenticationSuccessHandler)
                         .authorizationEndpoint(authorization -> authorization
                                 .baseUri("/auth/oauth2/authorize"))
