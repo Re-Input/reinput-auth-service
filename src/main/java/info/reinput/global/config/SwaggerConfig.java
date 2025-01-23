@@ -8,6 +8,7 @@ import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.security.*;
 import io.swagger.v3.oas.models.servers.Server;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springdoc.core.properties.SwaggerUiConfigParameters;
 import org.springdoc.core.properties.SwaggerUiConfigProperties;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +26,18 @@ public class SwaggerConfig {
 
     @Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
     private String kakaoClientSecret;
+    @Bean
+    public GroupedOpenApi publicApi() {
+        return GroupedOpenApi.builder()
+                .group("public")
+                .pathsToMatch("/**")  // 모든 경로에 적용
+                .addOperationCustomizer((operation, handlerMethod) -> {
+                    operation.getParameters().removeIf(param ->
+                            param.getName().equals("X-User-Id"));
+                    return operation;
+                })
+                .build();
+    }
 
     @Bean
     public OpenAPI openAPI() {
@@ -33,13 +46,7 @@ public class SwaggerConfig {
                 .components(createSecurityComponents())
                 .security(List.of(createSecurityRequirement()))
                 .info(createApiInfo())
-                .paths(createAuthPaths())
-                .addGlobalParameter(new Parameter()
-                        .in("header")
-                        .name("X-User-Id")
-                        .required(false)
-                        .schema(new Schema<Long>())
-                        .hidden(true));
+                .paths(createAuthPaths());
     }
 
     private List<Server> createServers() {
