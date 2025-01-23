@@ -69,6 +69,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
                 .build();
 
         response.setContentType("application/json;charset=UTF-8");
+        response.setStatus(HttpServletResponse.SC_OK);
         response.setCharacterEncoding("UTF-8");
         objectMapper.writeValue(response.getWriter(), tokenResponse);
     }
