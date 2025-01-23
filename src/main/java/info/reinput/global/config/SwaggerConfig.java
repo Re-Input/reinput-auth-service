@@ -2,6 +2,8 @@ package info.reinput.global.config;
 
 import io.swagger.v3.oas.models.*;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.security.*;
@@ -31,7 +33,13 @@ public class SwaggerConfig {
                 .components(createSecurityComponents())
                 .security(List.of(createSecurityRequirement()))
                 .info(createApiInfo())
-                .paths(createAuthPaths());
+                .paths(createAuthPaths())
+                .addGlobalParameter(new Parameter()
+                        .in("header")
+                        .name("X-User-Id")
+                        .required(false)
+                        .schema(new Schema<Long>())
+                        .hidden(true));
     }
 
     private List<Server> createServers() {
