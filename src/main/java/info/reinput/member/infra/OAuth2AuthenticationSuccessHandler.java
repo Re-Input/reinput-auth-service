@@ -11,6 +11,7 @@ import info.reinput.member.presentation.dto.res.TokenResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private final CustomOAuth2Service customOAuth2Service;
@@ -67,7 +69,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
                 .accessToken(tokenProvider.generateAccessToken(member.getId()))
                 .refreshToken(tokenProvider.generateRefreshToken(member.getId()))
                 .build();
-
+        log.info("OAuth2AuthenticationSuccessHandler tokenResponse: {}", tokenResponse);
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.setCharacterEncoding("UTF-8");
