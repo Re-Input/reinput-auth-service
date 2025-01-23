@@ -6,6 +6,7 @@ import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.security.*;
 import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +14,12 @@ import java.util.List;
 
 @Configuration
 public class SwaggerConfig {
+
+    @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
+    private String kakaoClientId;
+
+    @Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
+    private String kakaoClientSecret;
 
     @Bean
     public OpenAPI openAPI() {
@@ -48,6 +55,8 @@ public class SwaggerConfig {
                                         .addString("account_email", "email")
                                 )
                         )
+                        .addExtension("x-client-id", kakaoClientId)
+                        .addExtension("x-client-secret", kakaoClientSecret)
                 );
     }
 
