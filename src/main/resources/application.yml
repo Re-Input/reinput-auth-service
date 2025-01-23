@@ -52,7 +52,7 @@ spring:
           kakao:
             client-id: ${KAKAO_CLIENT_ID}
             client-secret: ${KAKAO_CLIENT_SECRET}
-            redirect-uri: "{baseUrl}/auth/oauth2/kakao/callback/v1"
+            redirect-uri: "api.reinput.info:8000/auth/oauth2/kakao/callback/v1"
             authorization-grant-type: authorization_code
             client-authentication-method: client_secret_post
             scope:
