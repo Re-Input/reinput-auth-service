@@ -41,9 +41,6 @@ public class SecurityConfig {
                                 .baseUri("/auth/oauth2/authorize"))
                         .redirectionEndpoint(redirection -> redirection
                                 .baseUri("/auth/oauth2/*/callback/*"))
-                )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // SavedRequest 방지
                 );
 
         return http.build();
