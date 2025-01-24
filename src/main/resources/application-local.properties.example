@@ -1,0 +1,6 @@
+# JWT
+JWT_SECRET=local-jwt-secret-key
+
+# Kakao OAuth
+KAKAO_CLIENT_ID=your-kakao-client-id
+KAKAO_CLIENT_SECRET=your-kakao-client-secret 
