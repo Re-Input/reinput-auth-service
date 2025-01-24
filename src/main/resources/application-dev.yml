@@ -5,9 +5,9 @@ spring:
   application:
     name: reinput-auth-service
   datasource:
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${{ secrets.DB_USERNAME }}
+    password: ${{ secrets.DB_PASSWORD }}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -29,8 +29,8 @@ spring:
       client:
         registration:
           kakao:
-            client-id: ${KAKAO_CLIENT_ID}
-            client-secret: ${KAKAO_CLIENT_SECRET}
+            client-id: ${{ secrets.KAKAO_CLIENT_ID }}
+            client-secret: ${{ secrets.KAKAO_CLIENT_SECRET }}
             redirect-uri: "http://api.reinput.info:8000/auth/oauth2/kakao/callback/v1"
             authorization-grant-type: authorization_code
             client-authentication-method: client_secret_post
@@ -43,7 +43,7 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 jwt:
-  secret: ${JWT_SECRET}
+  secret: ${{ secrets.JWT_SECRET }}
   accessToken:
     expiration: 3600
   refreshToken:
@@ -55,8 +55,8 @@ springdoc:
     url: /member/v3/api-docs
     disable-swagger-default-url: true
     oauth:
-      client-id: ${KAKAO_CLIENT_ID}
-      client-secret: ${KAKAO_CLIENT_SECRET}
+      client-id: ${{ secrets.KAKAO_CLIENT_ID }}
+      client-secret: ${{ secrets.KAKAO_CLIENT_SECRET }}
       scopes: account_email
       app-name: reinput-auth-service
     oauth2-redirect-url: "http://api.reinput.info:8000/member/swagger-ui/oauth2-redirect.html"
