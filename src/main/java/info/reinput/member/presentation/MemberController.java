@@ -3,6 +3,7 @@ package info.reinput.member.presentation;
 import info.reinput.member.application.impl.MemberServiceImpl;
 import info.reinput.member.presentation.dto.req.OnBoardReq;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,7 @@ public class MemberController {
     @PostMapping("/onboarding/v1")
     public ResponseEntity<Void> onBoardingV1(
             @RequestBody final OnBoardReq onBoardReq,
-            @RequestHeader("X-User-Id") final Long userId){
+            @Parameter(hidden = true) @RequestHeader("X-User-Id") final Long userId){
         log.info("onBoardingV1 start");
         memberService.onBoard(OnBoardReq.toMemberDto(onBoardReq), userId);
 
