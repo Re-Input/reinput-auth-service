@@ -12,6 +12,7 @@ on:
 env:
   AWS_REGION: us-east-1
   ECR_REGISTRY: public.ecr.aws/e7w4k6e4
+  SERVICE_NAME: auth-service
 
 jobs:
   deploy:
@@ -36,15 +37,15 @@ jobs:
           ssh ec2 '
             aws ecr-public get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
 
-            if docker ps -a | grep -q auth-service; then
-              docker stop auth-service
-              docker rm auth-service
-              docker rmi ${{ env.ECR_REGISTRY }}/reinput/auth-service:latest || true
+            if docker ps -a | grep -q ${{ env.SERVICE_NAME }}; then
+              docker stop ${{ env.SERVICE_NAME }}
+              docker rm ${{ env.SERVICE_NAME }}
+              docker rmi ${{ env.ECR_REGISTRY }}/reinput/${{ env.SERVICE_NAME }}:latest || true
             fi
 
-            docker pull ${{ env.ECR_REGISTRY }}/reinput/auth-service:latest
+            docker pull ${{ env.ECR_REGISTRY }}/reinput/${{ env.SERVICE_NAME }}:latest
             docker run -d \
-              --name auth-service \
+              --name ${{ env.SERVICE_NAME }} \
               --network host \
               -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
               -e KAKAO_CLIENT_ID="${{ secrets.KAKAO_CLIENT_ID }}" \
@@ -54,7 +55,7 @@ jobs:
               -e DB_NAME="${{ secrets.DB_NAME }}" \
               -e DB_USERNAME="${{ secrets.DB_USERNAME }}" \
               -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
-              ${{ env.ECR_REGISTRY }}/reinput/auth-service:latest
+              ${{ env.ECR_REGISTRY }}/reinput/${{ env.SERVICE_NAME }}:latest
             
-            docker ps | grep auth-service
+            docker ps | grep ${{ env.SERVICE_NAME }}
           '

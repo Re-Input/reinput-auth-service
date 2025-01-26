@@ -1,7 +1,34 @@
 spring:
   profiles:
     active: local
----
+  application:
+    name: reinput-auth-service
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 5000
+            readTimeout: 5000
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET}
+            redirect-uri: "http://api.reinput.info:8000/auth/oauth2/kakao/callback/v1"
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_post
+            scope:
+              - account_email
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
 server:
   port: 8081
   forward-headers-strategy: framework
@@ -15,3 +42,25 @@ eureka:
   instance:
     prefer-ip-address: true    
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+jwt:
+  secret: ${JWT_SECRET}
+  accessToken:
+    expiration: 3600
+  refreshToken:
+    expiration: 86400
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    config-url: /member/v3/api-docs/swagger-config
+    url: /member/v3/api-docs
+    disable-swagger-default-url: true
+    oauth:
+      client-id: ${KAKAO_CLIENT_ID}
+      client-secret: ${KAKAO_CLIENT_SECRET}
+      scopes: account_email
+      app-name: reinput-auth-service
+    oauth2-redirect-url: "http://api.reinput.info:8000/member/swagger-ui/oauth2-redirect.html"
+  api-docs:
+    path: /v3/api-docs
